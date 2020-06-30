@@ -16,14 +16,7 @@ export function paginateResults({
   const cursorIndex =
     results.findIndex(hasCurrentCursor.bind(null, cursor, getCursor))
 
-  return cursorIndex >= 0
-    ? cursorIndex === results.length - 1 // don't let us overflow
-      ? []
-      : results.slice(
-          cursorIndex + 1,
-          Math.min(results.length, cursorIndex + 1 + pageSize),
-        )
-    : results.slice(0, pageSize);
+  return nextPage(results, cursorIndex, pageSize)
 }
 
 function hasCurrentCursor(cursor, getCursor, item) {
@@ -31,4 +24,18 @@ function hasCurrentCursor(cursor, getCursor, item) {
   let itemCursor = item.cursor || getCursor(item);
   // if there's still not a cursor, return false by default
   return itemCursor ? cursor === itemCursor : false;
+}
+
+function nextPage(results, cursorIndex, pageSize) {
+  if (cursorIndex < 0) {
+    return results.slice(0, pageSize)
+  }
+
+  // don't let us overflow
+  if (cursorIndex === results.length - 1) {
+    return []
+  }
+  const nextPageLimit = Math.min(results.length, cursorIndex + 1 + pageSize)
+
+  return results.slice(cursorIndex + 1, nextPageLimit)
 }

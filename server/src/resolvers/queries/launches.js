@@ -1,4 +1,4 @@
-import { paginateResults } from "../utils.js"
+import { paginateResults } from "../../utils.js"
 
 export async function launches(
   _parent,

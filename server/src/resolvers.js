@@ -1,31 +1,16 @@
 import { launches } from "./resolvers/launches.js"
+import { bookTrips } from "./resolvers/book-trips.js"
 
 export const resolvers = {
   Query: {
     launches: launches,
-    launch: (_parent, { id }, { dataSources }) =>
-      dataSources.launchAPI.getLaunchById({ launchId: id }),
-    me: async (_parent, _args, { dataSources }) =>
-      dataSources.userAPI.findOrCreateUser(),
+    launch: (_parent, { id }, { dataSources: { launchAPI } }) =>
+      launchAPI.getLaunchById({ launchId: id }),
+    me: async (_parent, _args, { dataSources: { userAPI } }) =>
+      userAPI.findOrCreateUser(),
   },
   Mutation: {
-    bookTrips: async (_parent, { launchIds }, { dataSources }) => {
-      const results = await dataSources.userAPI.bookTrips({ launchIds });
-      const launches = await dataSources.launchAPI.getLaunchesByIds({
-        launchIds,
-      });
-
-      return {
-        success: results && results.length === launchIds.length,
-        message:
-          results.length === launchIds.length
-            ? 'trips booked successfully'
-            : `the following launches couldn't be booked: ${launchIds.filter(
-                id => !results.includes(id),
-              )}`,
-        launches,
-      };
-    },
+    bookTrips: bookTrips,
     cancelTrip: async (_parent, { launchId }, { dataSources }) => {
       const result = dataSources.userAPI.cancelTrip({ launchId });
 
@@ -44,7 +29,7 @@ export const resolvers = {
     },
     login: async (_parent, { email }, { dataSources }) => {
       const user = await dataSources.userAPI.findOrCreateUser({ email });
-      if (user) return new Buffer(email).toString('base64');
+      if (user) return Buffer.from(email).toString('base64');
     },
     uploadProfileImage: async(_parent, { file }, { dataSources }) =>
       dataSources.userAPI.uploadProfileImage({ file }),

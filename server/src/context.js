@@ -1,7 +1,7 @@
 import isEmail from "isemail"
 
 // the function that sets up the global context for each resolver, using the req
-export function globalContext({ users }) {
+export function initContext({ users }) {
   return async ({ req }) => {
     // simple auth check on every request
     const auth = (req?.headers.authorization) || ""

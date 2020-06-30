@@ -2,11 +2,11 @@ import dotenv from "dotenv"
 import apolloserver from "apollo-server"
 import { typeDefs } from "./schema.js"
 import { resolvers } from "./resolvers.js"
-import { createStore } from "./utils.js"
+import { initStore } from "./store.js"
 import { LaunchAPI } from "./datasources/launch.js"
 import { UserAPI } from "./datasources/user.js"
 import { internalEngineDemo } from "./engine-demo.js"
-import { globalContext } from "./context.js"
+import { initContext } from "./context.js"
 
 dotenv.config()
 
@@ -15,15 +15,14 @@ const { ApolloServer } = apolloserver
 export { typeDefs, resolvers, ApolloServer, LaunchAPI, UserAPI }
 
 // creates a sequelize connection once. NOT for every request
-export const store = createStore();
+export const store = initStore()
+export const context = initContext(store)
 
 // set up any dataSources our resolvers need
 export const dataSources = () => ({
   launchAPI: new LaunchAPI(),
-  userAPI: new UserAPI({ store }),
+  userAPI: new UserAPI({ store })
 })
-
-export const context = globalContext(store)
 
 // Set up Apollo Server
 export const server = new ApolloServer({
@@ -36,8 +35,8 @@ export const server = new ApolloServer({
   engine: {
     reportSchema: true,
     apiKey: process.env.ENGINE_API_KEY,
-    ...internalEngineDemo,
-  },
+    ...internalEngineDemo
+  }
 })
 
 // Start our server if we're not in a test env.

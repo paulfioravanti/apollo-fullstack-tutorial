@@ -1,5 +1,5 @@
 import s3 from "aws-sdk/clients/s3.js"
-import isemail from "isemail"
+import isEmail from "isemail"
 import mime from "mime"
 import uuidv4 from "uuid/v4.js"
 import apollo from "apollo-datasource"

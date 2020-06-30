@@ -1,6 +1,7 @@
-const {Sequelize} = require('sequelize');
+import sequelize from "sequelize"
+const { Sequelize } = sequelize
 
-module.exports.paginateResults = ({
+export const paginateResults = ({
   after: cursor,
   pageSize = 20,
   results,
@@ -26,9 +27,9 @@ module.exports.paginateResults = ({
           Math.min(results.length, cursorIndex + 1 + pageSize),
         )
     : results.slice(0, pageSize);
-};
+}
 
-module.exports.createStore = () => {
+export const createStore = () => {
   const db = new Sequelize({
     dialect: 'sqlite',
     storage: './store.sqlite'

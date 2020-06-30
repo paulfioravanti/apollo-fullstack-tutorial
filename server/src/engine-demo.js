@@ -1,5 +1,5 @@
-module.exports = {
-  schemaTag: 'current',
+export const internalEngineDemo = {
+  graphVariant: 'current',
   generateClientInfo: ({ request }) => {
     if (!request || !request.http) return {};
     const clientName = request.http.headers.get('client-name');

@@ -1,10 +1,13 @@
-const S3 = require('aws-sdk/clients/s3');
-const isEmail = require('isemail');
-const mime = require('mime');
-const uuidv4 = require('uuid/v4');
-const { DataSource } = require('apollo-datasource');
+import s3 from "aws-sdk/clients/s3.js"
+import isemail from "isemail"
+import mime from "mime"
+import uuidv4 from "uuid/v4.js"
+import apollo from "apollo-datasource"
 
-class UserAPI extends DataSource {
+const { S3 } = s3
+const { DataSource } = apollo
+
+export class UserAPI extends DataSource {
   constructor({ store }) {
     super();
     this.store = store;
@@ -118,5 +121,3 @@ class UserAPI extends DataSource {
     });
   }
 }
-    
-module.exports = UserAPI;

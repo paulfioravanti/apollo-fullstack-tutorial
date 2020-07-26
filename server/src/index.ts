@@ -1,16 +1,14 @@
-import dotenv from "dotenv"
-import apolloserver from "apollo-server"
-import { typeDefs } from "./schema.js"
-import { resolvers } from "./resolvers.js"
-import { initStore } from "./store.js"
-import { LaunchAPI } from "./datasources/launch.js"
-import { UserAPI } from "./datasources/user.js"
-import { internalEngineDemo } from "./engine-demo.js"
-import { initContext } from "./context.js"
+import { config } from "dotenv"
+import { ApolloServer } from "apollo-server"
+import { typeDefs } from "./schema"
+import { resolvers } from "./resolvers"
+import { initStore } from "./store"
+import { LaunchAPI } from "./datasources/launch"
+import { UserAPI } from "./datasources/user"
+import { internalEngineDemo } from "./engine-demo"
+import { initContext } from "./context"
 
-dotenv.config()
-
-const { ApolloServer } = apolloserver
+config()
 
 export { typeDefs, resolvers, ApolloServer, LaunchAPI, UserAPI }
 

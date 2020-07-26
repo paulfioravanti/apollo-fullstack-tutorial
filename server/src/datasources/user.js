@@ -1,11 +1,10 @@
-import s3 from "aws-sdk/clients/s3.js"
+import s3 from "aws-sdk/clients/s3"
 import isEmail from "isemail"
 import mime from "mime"
-import uuidv4 from "uuid/v4.js"
-import apollo from "apollo-datasource"
+import { v4 as uuidv4 } from "uuid"
+import { DataSource } from "apollo-datasource"
 
 const { S3 } = s3
-const { DataSource } = apollo
 
 export class UserAPI extends DataSource {
   constructor({ store }) {

@@ -1,5 +1,1 @@
-module.exports = {
-  service: {
-    name: 'space-explorer',
-  },
-};
+export const service = { name: "space-explorer" }

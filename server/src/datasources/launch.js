@@ -1,5 +1,4 @@
-import apollo from "apollo-datasource-rest"
-const { RESTDataSource } = apollo
+import { RESTDataSource } from "apollo-datasource-rest"
 
 export class LaunchAPI extends RESTDataSource {
   constructor() {

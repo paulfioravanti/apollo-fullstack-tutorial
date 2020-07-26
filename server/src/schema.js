@@ -1,5 +1,4 @@
-import apollo from "apollo-server"
-const { gql } = apollo
+import { gql } from "apollo-server"
 
 export const typeDefs = gql`
   type Query {

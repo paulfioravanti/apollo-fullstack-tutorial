@@ -1,4 +1,7 @@
 import { config } from "dotenv"
+
+config()
+
 import { ApolloServer } from "apollo-server"
 import { typeDefs } from "./schema"
 import { resolvers } from "./resolvers"
@@ -7,8 +10,6 @@ import { LaunchAPI } from "./datasources/launch"
 import { UserAPI } from "./datasources/user"
 import { internalEngineDemo } from "./engine-demo"
 import { initContext } from "./context"
-
-config()
 
 export { typeDefs, resolvers, ApolloServer, LaunchAPI, UserAPI }
 
@@ -23,7 +24,7 @@ export const dataSources = () => ({
 })
 
 // Set up Apollo Server
-export const server = new ApolloServer({
+export const server: ApolloServer = new ApolloServer({
   typeDefs,
   resolvers,
   dataSources,
@@ -37,10 +38,13 @@ export const server = new ApolloServer({
   }
 })
 
+const PORT: string = process.env.PORT || "4000"
+
 // Start our server if we're not in a test env.
 // if we're in a test env, we'll manually start it in a test
 if (process.env.NODE_ENV !== "test") {
   server
-    .listen({ port: process.env.PORT || 4000 })
+    .listen({ port: PORT })
+    // eslint-disable-next-line no-console
     .then(({ url }) => console.log(`🚀 app running at ${url}`))
 }

@@ -1,4 +1,4 @@
-const resolvers = require('../resolvers');
+import { resolvers } from "../resolvers"
 
 const mockContext = {
   dataSources: {

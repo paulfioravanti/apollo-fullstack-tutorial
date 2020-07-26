@@ -1,50 +1,49 @@
-const { HttpLink } = require('apollo-link-http');
-const fetch = require('node-fetch');
-const { execute, toPromise } = require('apollo-link');
+import { HttpLink } from "apollo-link-http"
+import fetch from "node-fetch"
+import { execute, toPromise } from "apollo-link"
 
-module.exports.toPromise = toPromise;
+export { toPromise }
 
-const {
+import {
   dataSources,
-  context: defaultContext,
+  context,
   typeDefs,
   resolvers,
   ApolloServer,
   LaunchAPI,
   UserAPI,
   store,
-} = require('../');
+} from "../"
+const { defaultContext } = context
 
 /**
  * Integration testing utils
  */
-const constructTestServer = ({ context = defaultContext } = {}) => {
-  const userAPI = new UserAPI({ store });
-  const launchAPI = new LaunchAPI();
+export const constructTestServer = ({ context = defaultContext } = {}) => {
+  const userAPI = new UserAPI({ store })
+  const launchAPI = new LaunchAPI()
 
   const server = new ApolloServer({
     typeDefs,
     resolvers,
     dataSources: () => ({ userAPI, launchAPI }),
     context,
-  });
+  })
 
-  return { server, userAPI, launchAPI };
+  return { server, userAPI, launchAPI }
 };
-
-module.exports.constructTestServer = constructTestServer;
 
 /**
  * e2e Testing Utils
  */
 
-const startTestServer = async server => {
+export const startTestServer = async server => {
   // if using apollo-server-express...
   // const app = express();
   // server.applyMiddleware({ app });
   // const httpServer = await app.listen(0);
 
-  const httpServer = await server.listen({ port: 0 });
+  const httpServer = await server.listen({ port: 0 })
 
   const link = new HttpLink({
     uri: `http://localhost:${httpServer.port}`,
@@ -52,13 +51,11 @@ const startTestServer = async server => {
   });
 
   const executeOperation = ({ query, variables = {} }) =>
-    execute(link, { query, variables });
+    execute(link, { query, variables })
 
   return {
     link,
     stop: () => httpServer.server.close(),
     graphql: executeOperation,
-  };
-};
-
-module.exports.startTestServer = startTestServer;
+  }
+}

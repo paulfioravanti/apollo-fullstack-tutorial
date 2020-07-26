@@ -1,13 +1,13 @@
-const {createTestClient} = require('apollo-server-testing');
-const gql = require('graphql-tag');
-const nock = require('nock');
+import { createTestClient } from "apollo-server-testing"
+import gql from "graphql-tag"
+import { nock } from "nock"
 
-const {constructTestServer} = require('./__utils');
+import { constructTestServer } from "./__utils"
 
 // the mocked REST API data
-const {mockLaunchResponse} = require('../datasources/__tests__/launch');
+import { mockLaunchResponse } from "../datasources/__tests__/launch"
 // the mocked SQL DataSource store
-const {mockStore} = require('../datasources/__tests__/user');
+import { mockStore } from "../datasources/__tests__/user"
 
 const GET_LAUNCHES = gql`
   query launchList($after: String) {

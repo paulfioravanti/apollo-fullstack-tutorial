@@ -1,4 +1,4 @@
-const UserAPI = require('../user');
+import { UserAPI } from "../user"
 
 const mockStore = {
   users: {

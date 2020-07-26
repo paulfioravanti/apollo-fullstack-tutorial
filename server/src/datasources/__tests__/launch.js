@@ -1,4 +1,4 @@
-const LaunchAPI = require('../launch');
+import { LaunchAPI } from "../launch"
 
 /**
  * There are mock Launches at the bottom of this file.

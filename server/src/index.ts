@@ -5,7 +5,7 @@ config()
 import { ApolloServer } from "apollo-server"
 import { typeDefs } from "./schema"
 import { resolvers } from "./resolvers"
-import { initStore } from "./store"
+import { initStore, Store } from "./store"
 import { LaunchAPI } from "./datasources/launch"
 import { UserAPI } from "./datasources/user"
 import { internalEngineDemo } from "./engine-demo"
@@ -14,7 +14,7 @@ import { initContext } from "./context"
 export { typeDefs, resolvers, ApolloServer, LaunchAPI, UserAPI }
 
 // creates a sequelize connection once. NOT for every request
-export const store = initStore()
+export const store: Store = initStore()
 export const context = initContext(store)
 
 // set up any dataSources our resolvers need

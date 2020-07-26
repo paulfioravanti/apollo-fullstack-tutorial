@@ -1,10 +1,19 @@
+export type MaybeNull<T> = T | null
+
+type Pagination = {
+  after?: MaybeNull<string>
+  pageSize?: number
+  results: any[]
+  getCursor?: (item: any) => MaybeNull<string>
+}
+
 export function paginateResults({
   after: cursor,
   pageSize = 20,
   results,
   // can pass in a function to calculate an item's cursor
-  getCursor = () => null,
-}) {
+  getCursor = () => null
+}: Pagination): string[] {
   if (pageSize < 1) {
     return []
   }
@@ -21,9 +30,9 @@ export function paginateResults({
 
 function hasCurrentCursor(cursor, getCursor, item) {
   // if an item has a `cursor` on it, use that, otherwise try to generate one
-  let itemCursor = item.cursor || getCursor(item);
+  const itemCursor = item.cursor || getCursor(item)
   // if there's still not a cursor, return false by default
-  return itemCursor ? cursor === itemCursor : false;
+  return itemCursor ? cursor === itemCursor : false
 }
 
 function nextPage(results, cursorIndex, pageSize) {

@@ -1,5 +1,4 @@
-import sequelize from "sequelize"
-const { Sequelize } = sequelize
+import { Sequelize } from "sequelize"
 
 export function initStore() {
   const db = new Sequelize({

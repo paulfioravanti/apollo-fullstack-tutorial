@@ -1,3 +1,4 @@
+import { ContextFunction } from "apollo-server-core"
 import { launches } from "./resolvers/queries/launches"
 import { launch } from "./resolvers/queries/launch"
 import { me } from "./resolvers/queries/me"

@@ -1,9 +1,11 @@
 export type MaybeNull<T> = T | null
+export type Maybe<T> = T | undefined
+export type AnyObject = Record<string, any>
 
 type Pagination = {
   after?: MaybeNull<string>
   pageSize?: number
-  results: any[]
+  results: string[]
   getCursor?: (item: any) => MaybeNull<string>
 }
 
@@ -12,7 +14,7 @@ export function paginateResults({
   pageSize = 20,
   results,
   // can pass in a function to calculate an item's cursor
-  getCursor = () => null
+  getCursor = (): any => null
 }: Pagination): string[] {
   if (pageSize < 1) {
     return []
@@ -28,14 +30,14 @@ export function paginateResults({
   return nextPage(results, cursorIndex, pageSize)
 }
 
-function hasCurrentCursor(cursor, getCursor, item) {
+function hasCurrentCursor(cursor: any, getCursor: any, item: any): any {
   // if an item has a `cursor` on it, use that, otherwise try to generate one
   const itemCursor = item.cursor || getCursor(item)
   // if there's still not a cursor, return false by default
   return itemCursor ? cursor === itemCursor : false
 }
 
-function nextPage(results, cursorIndex, pageSize) {
+function nextPage(results: any, cursorIndex: any, pageSize: any): any {
   if (cursorIndex < 0) {
     return results.slice(0, pageSize)
   }

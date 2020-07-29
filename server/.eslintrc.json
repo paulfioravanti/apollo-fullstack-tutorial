@@ -31,17 +31,27 @@
       }
     ],
     "@typescript-eslint/explicit-function-return-type": ["error"],
+    "@typescript-eslint/member-delimiter-style": [
+      "error",
+      {
+        "multiline": {
+          "delimiter": "none",
+          "requireLast": false
+        }
+      }
+    ],
     "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/semi": ["error", "never"],
     "comma-dangle": ["error", "never"],
-    "no-console": "error",
     "import/no-default-export": "error",
     "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],
+    "no-console": "error",
     "no-use-before-define": [
       "error",
       { "functions": false, "classes": true, "variables": true }
     ],
     "quotes": ["error", "double"],
-    "semi": ["error", "never"]
+    "semi": "off"
   }
 }

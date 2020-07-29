@@ -8,7 +8,8 @@
   "scripts": {
     "test": "jest",
     "start": "nodemon src/index.ts",
-    "start:ci": "node src/index.ts"
+    "start:ci": "node src/index.ts",
+    "generate": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "apollo-datasource": "^0.7.2",

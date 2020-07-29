@@ -21,7 +21,7 @@ export const store: Store = initStore()
 export const context: ContextFunction = initContext(store)
 
 type DataSources = {
-  launchAPI: RESTDataSource,
+  launchAPI: RESTDataSource
   userAPI: DataSource
 }
 

@@ -1,25 +1,25 @@
 import { Sequelize, ModelDefined, DataTypes } from "sequelize"
 
 export type UserAttributes = {
-  createdAt: Date,
-  updatedAt: Date,
-  email: string,
-  profileImage: string,
-  token: string,
+  createdAt: Date
+  updatedAt: Date
+  email: string
+  profileImage: string
+  token: string
 }
 export type UserCreationAttributes = Partial<UserAttributes>
 export type UserDefinition = ModelDefined<UserAttributes, UserCreationAttributes>
 type TripAttributes = {
-  createdAt: Date,
-  updatedAt: Date,
-  launchId: number,
+  createdAt: Date
+  updatedAt: Date
+  launchId: number
   userId: number
 }
 type TripCreationAttributes = Partial<TripAttributes>
 type TripDefinition = ModelDefined<TripAttributes, TripCreationAttributes>
 export type Store = {
-  db: Sequelize,
-  users: UserDefinition,
+  db: Sequelize
+  users: UserDefinition
   trips: TripDefinition
 }
 

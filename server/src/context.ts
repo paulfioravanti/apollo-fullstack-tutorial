@@ -5,8 +5,14 @@ import { ContextFunction } from "apollo-server-core"
 import { Model } from "sequelize/types"
 import { MaybeNull } from "./utils"
 
-type User = { user: MaybeNull<Model> }
-type Result = [Model<UserAttributes, UserCreationAttributes>, boolean]
+type User = {
+  user: MaybeNull<Model>
+}
+type Result = [
+  Model<UserAttributes,
+  UserCreationAttributes>,
+  boolean
+]
 
 // the function that sets up the global context for each resolver, using the req
 export function initContext({ users }: Store): ContextFunction {

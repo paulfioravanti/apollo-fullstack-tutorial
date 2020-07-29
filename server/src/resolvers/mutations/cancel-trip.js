@@ -6,14 +6,14 @@ export async function cancelTrip(
   const result = await userAPI.cancelTrip({ launchId })
 
   if (!result) {
-    return { success: false, message: 'failed to cancel trip' }
+    return { success: false, message: "failed to cancel trip" }
   }
 
   const launch = await launchAPI.getLaunchById({ launchId })
 
   return {
     success: true,
-    message: 'trip cancelled',
-    launches: [launch],
+    message: "trip cancelled",
+    launches: [launch]
   }
 }

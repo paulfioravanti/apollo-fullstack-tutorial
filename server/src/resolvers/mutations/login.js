@@ -1,6 +1,6 @@
 export async function login(_parent, { email }, { dataSources: { userAPI } }) {
   const user = await userAPI.findOrCreateUser({ email })
   if (user) {
-    return Buffer.from(email).toString('base64')
+    return Buffer.from(email).toString("base64")
   }
 }

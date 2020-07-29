@@ -1,14 +1,8 @@
 import { Sequelize, ModelDefined, DataTypes } from "sequelize"
+import { UserDefinition, UserModel, defineUser } from "./store/user"
 
-export type UserAttributes = {
-  createdAt: Date
-  updatedAt: Date
-  email: string
-  profileImage: string
-  token: string
-}
-export type UserCreationAttributes = Partial<UserAttributes>
-export type UserDefinition = ModelDefined<UserAttributes, UserCreationAttributes>
+export { UserModel }
+
 type TripAttributes = {
   createdAt: Date
   updatedAt: Date
@@ -17,6 +11,7 @@ type TripAttributes = {
 }
 type TripCreationAttributes = Partial<TripAttributes>
 type TripDefinition = ModelDefined<TripAttributes, TripCreationAttributes>
+
 export type Store = {
   db: Sequelize
   users: UserDefinition
@@ -30,14 +25,7 @@ export function initStore(): Store {
       storage: "./store.sqlite"
     })
 
-  const users: UserDefinition =
-    db.define("user", {
-      createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE,
-      email: DataTypes.STRING,
-      profileImage: DataTypes.STRING,
-      token: DataTypes.STRING
-    })
+  const users: UserDefinition = defineUser(db)
 
   const trips: TripDefinition =
     db.define("trip", {

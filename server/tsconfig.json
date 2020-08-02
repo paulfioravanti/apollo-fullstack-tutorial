@@ -10,5 +10,10 @@
     "rootDir": "src",
     "strict": true,
     "target": "es2016"
-  }
+  },
+  "exclude": [
+    "apollo.config.js",
+    "babel.config.js",
+    "jest.config.js"
+  ]
 }

@@ -6,15 +6,14 @@ import { DataSource } from "apollo-datasource"
 import { RESTDataSource } from "apollo-datasource-rest"
 import { ApolloServer } from "apollo-server"
 import { ContextFunction } from "apollo-server-core"
-import { typeDefs } from "./schema"
-import { resolvers } from "./resolvers"
+import { schema } from "./schema"
 import { initStore, Store } from "./store"
 import { LaunchAPI } from "./datasources/launch"
 import { UserAPI } from "./datasources/user"
 import { internalEngineDemo } from "./engine-demo"
 import { initContext } from "./context"
 
-export { typeDefs, resolvers, ApolloServer, LaunchAPI, UserAPI }
+export { schema, ApolloServer, LaunchAPI, UserAPI }
 
 // creates a sequelize connection once. NOT for every request
 export const store: Store = initStore()
@@ -33,8 +32,7 @@ export const dataSources = (): DataSources => ({
 
 // Set up Apollo Server
 export const server: ApolloServer = new ApolloServer({
-  typeDefs,
-  resolvers,
+  schema,
   dataSources,
   context,
   introspection: true,

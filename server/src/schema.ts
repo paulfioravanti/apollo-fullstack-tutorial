@@ -1,79 +1,30 @@
-import { gql } from "apollo-server"
+import { gql, makeExecutableSchema } from "apollo-server"
+import { typeDefs as Launch } from "./gql/launch"
+import { typeDefs as LaunchConnection } from "./gql/launchConnection"
+import { typeDefs as Mission } from "./gql/mission"
+import { typeDefs as Rocket } from "./gql/rocket"
+import { typeDefs as TripUpdateResponse } from "./gql/tripUpdateResponse"
+import { typeDefs as User } from "./gql/user"
+import { resolvers } from "./resolvers"
 
-export const typeDefs = gql`
-  type Query {
-    launches(
-      """
-      The number of results to show. Must be >= 1. Default = 20
-      """
-      pageSize: Int
-      """
-      If you add a cursor here, it will only return results _after_ this cursor
-      """
-      after: String
-    ): LaunchConnection!
-    launch(id: ID!): Launch
-    me: User
-  }
+const BaseTypeDef = gql`
+  type Query
 
   type Mutation {
-    # if false, signup failed -- check errors
-    bookTrips(launchIds: [ID]!): TripUpdateResponse!
-
-    # if false, cancellation failed -- check errors
-    cancelTrip(launchId: ID!): TripUpdateResponse!
-
     login(email: String): String # login token
-
-    # for use with the iOS tutorial
-    uploadProfileImage(file: Upload!): User
-  }
-
-  type TripUpdateResponse {
-    success: Boolean!
-    message: String
-    launches: [Launch]
-  }
-
-  """
-  Simple wrapper around our list of launches that contains a cursor to the
-  last item in the list. Pass this cursor to the launches query to fetch results
-  after these.
-  """
-  type LaunchConnection {
-    cursor: String!
-    hasMore: Boolean!
-    launches: [Launch]!
-  }
-
-  type Launch {
-    id: ID!
-    site: String
-    mission: Mission
-    rocket: Rocket
-    isBooked: Boolean!
-  }
-
-  type Rocket {
-    id: ID!
-    name: String
-    type: String
-  }
-
-  type User {
-    id: ID!
-    email: String!
-    profileImage: String
-    trips: [Launch]!
-  }
-
-  type Mission {
-    name: String
-    missionPatch(size: PatchSize): String
-  }
-
-  enum PatchSize {
-    SMALL
-    LARGE
   }
 `
+
+export const schema =
+  makeExecutableSchema({
+    typeDefs: [
+      BaseTypeDef,
+      Launch,
+      LaunchConnection,
+      Mission,
+      Rocket,
+      TripUpdateResponse,
+      User
+    ],
+    resolvers: resolvers
+  })

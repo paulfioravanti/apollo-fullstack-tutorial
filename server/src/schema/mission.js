@@ -1,13 +1,7 @@
-import { gql } from "apollo-server"
+import { typeDefs } from "./mission/typedefs"
+import { resolvers } from "./mission/resolvers"
 
-export const typeDefs = gql`
-  type Mission {
-    name: String
-    missionPatch(size: PatchSize): String
-  }
-
-  enum PatchSize {
-    SMALL
-    LARGE
-  }
-`
+export const Mission = {
+  typeDefs,
+  resolvers
+}

@@ -2,7 +2,7 @@ import merge from "lodash.merge"
 import { gql, makeExecutableSchema } from "apollo-server"
 import { Launch } from "./schema/launch"
 import { LaunchConnection } from "./schema/launchConnection"
-import { typeDefs as Mission } from "./schema/mission"
+import { Mission } from "./schema/mission"
 import { typeDefs as Rocket } from "./schema/rocket"
 import { typeDefs as TripUpdateResponse } from "./schema/tripUpdateResponse"
 import { typeDefs as User } from "./schema/user"
@@ -22,7 +22,7 @@ export const schema =
       BaseTypeDef,
       Launch.typeDefs,
       LaunchConnection.typeDefs,
-      Mission,
+      Mission.typeDefs,
       Rocket,
       TripUpdateResponse,
       User
@@ -30,6 +30,7 @@ export const schema =
     resolvers: merge(
       resolvers,
       Launch.resolvers,
-      LaunchConnection.resolvers
+      LaunchConnection.resolvers,
+      Mission.resolvers
     )
   })

@@ -3,8 +3,8 @@ import { gql, makeExecutableSchema } from "apollo-server"
 import { Launch } from "./schema/launch"
 import { LaunchConnection } from "./schema/launchConnection"
 import { Mission } from "./schema/mission"
-import { typeDefs as Rocket } from "./schema/rocket"
-import { typeDefs as TripUpdateResponse } from "./schema/tripUpdateResponse"
+import { Rocket } from "./schema/rocket"
+import { TripUpdateResponse } from "./schema/tripUpdateResponse"
 import { typeDefs as User } from "./schema/user"
 import { resolvers } from "./resolvers"
 
@@ -23,14 +23,15 @@ export const schema =
       Launch.typeDefs,
       LaunchConnection.typeDefs,
       Mission.typeDefs,
-      Rocket,
-      TripUpdateResponse,
+      Rocket.typeDefs,
+      TripUpdateResponse.typeDefs,
       User
     ],
     resolvers: merge(
       resolvers,
       Launch.resolvers,
       LaunchConnection.resolvers,
-      Mission.resolvers
+      Mission.resolvers,
+      TripUpdateResponse.resolvers
     )
   })

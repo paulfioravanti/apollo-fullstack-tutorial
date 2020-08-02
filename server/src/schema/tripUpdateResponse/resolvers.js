@@ -1,4 +1,31 @@
-export async function bookTrips(
+export const resolvers = {
+  Mutation: {
+    bookTrips,
+    cancelTrip
+  }
+}
+
+async function cancelTrip(
+  _parent,
+  { launchId },
+  { dataSources: { userAPI, launchAPI } }
+) {
+  const result = await userAPI.cancelTrip({ launchId })
+
+  if (!result) {
+    return { success: false, message: "failed to cancel trip" }
+  }
+
+  const launch = await launchAPI.getLaunchById({ launchId })
+
+  return {
+    success: true,
+    message: "trip cancelled",
+    launches: [launch]
+  }
+}
+
+async function bookTrips(
   _parent,
   { launchIds },
   { dataSources: { userAPI, launchAPI } }

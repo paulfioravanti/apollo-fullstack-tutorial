@@ -1,9 +1,5 @@
-import { gql } from "apollo-server"
+import { typeDefs } from "./rocket/typedefs"
 
-export const typeDefs = gql`
-  type Rocket {
-    id: ID!
-    name: String
-    type: String
-  }
-`
+export const Rocket = {
+  typeDefs
+}

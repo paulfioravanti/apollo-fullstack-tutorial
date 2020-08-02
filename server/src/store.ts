@@ -1,6 +1,7 @@
-import { Sequelize } from "sequelize"
+import { Options, Sequelize } from "sequelize"
 import { UserDefinition, UserModel, defineUser } from "./store/user"
 import { TripDefinition, defineTrip } from "./store/trip"
+import config from "./store/config.json"
 
 export { UserModel }
 
@@ -11,11 +12,7 @@ export type Store = {
 }
 
 export function initStore(): Store {
-  const db: Sequelize =
-    new Sequelize({
-      dialect: "sqlite",
-      storage: "./store.sqlite"
-    })
+  const db: Sequelize = new Sequelize(config as Options)
   const users: UserDefinition = defineUser(db)
   const trips: TripDefinition = defineTrip(db)
 

@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from "graphql"
+import { GraphQLResolveInfo } from "graphql"
 export type Maybe<T> = T | null
 export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] }
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> }
@@ -9,15 +9,18 @@ export type Scalars = {
   Boolean: boolean
   Int: number
   Float: number
-  /** The `Upload` scalar type represents a file upload. */
-  Upload: any
 }
 
 export type Query = {
   __typename?: "Query"
-  launches: LaunchConnection
   launch?: Maybe<Launch>
+  launches: LaunchConnection
   me?: Maybe<User>
+}
+
+
+export type QueryLaunchArgs = {
+  id: Scalars["ID"]
 }
 
 
@@ -26,17 +29,16 @@ export type QueryLaunchesArgs = {
   after?: Maybe<Scalars["String"]>
 }
 
-
-export type QueryLaunchArgs = {
-  id: Scalars["ID"]
-}
-
 export type Mutation = {
   __typename?: "Mutation"
+  login?: Maybe<Scalars["String"]>
   bookTrips: TripUpdateResponse
   cancelTrip: TripUpdateResponse
-  login?: Maybe<Scalars["String"]>
-  uploadProfileImage?: Maybe<User>
+}
+
+
+export type MutationLoginArgs = {
+  email?: Maybe<Scalars["String"]>
 }
 
 
@@ -49,21 +51,13 @@ export type MutationCancelTripArgs = {
   launchId: Scalars["ID"]
 }
 
-
-export type MutationLoginArgs = {
-  email?: Maybe<Scalars["String"]>
-}
-
-
-export type MutationUploadProfileImageArgs = {
-  file: Scalars["Upload"]
-}
-
-export type TripUpdateResponse = {
-  __typename?: "TripUpdateResponse"
-  success: Scalars["Boolean"]
-  message?: Maybe<Scalars["String"]>
-  launches?: Maybe<Array<Maybe<Launch>>>
+export type Launch = {
+  __typename?: "Launch"
+  id: Scalars["ID"]
+  site?: Maybe<Scalars["String"]>
+  mission?: Maybe<Mission>
+  rocket?: Maybe<Rocket>
+  isBooked: Scalars["Boolean"]
 }
 
 /**
@@ -76,30 +70,6 @@ export type LaunchConnection = {
   cursor: Scalars["String"]
   hasMore: Scalars["Boolean"]
   launches: Array<Maybe<Launch>>
-}
-
-export type Launch = {
-  __typename?: "Launch"
-  id: Scalars["ID"]
-  site?: Maybe<Scalars["String"]>
-  mission?: Maybe<Mission>
-  rocket?: Maybe<Rocket>
-  isBooked: Scalars["Boolean"]
-}
-
-export type Rocket = {
-  __typename?: "Rocket"
-  id: Scalars["ID"]
-  name?: Maybe<Scalars["String"]>
-  type?: Maybe<Scalars["String"]>
-}
-
-export type User = {
-  __typename?: "User"
-  id: Scalars["ID"]
-  email: Scalars["String"]
-  profileImage?: Maybe<Scalars["String"]>
-  trips: Array<Maybe<Launch>>
 }
 
 export type Mission = {
@@ -118,11 +88,27 @@ export enum PatchSize {
   Large = "LARGE"
 }
 
-export enum CacheControlScope {
-  Public = "PUBLIC",
-  Private = "PRIVATE"
+export type Rocket = {
+  __typename?: "Rocket"
+  id: Scalars["ID"]
+  name?: Maybe<Scalars["String"]>
+  type?: Maybe<Scalars["String"]>
 }
 
+export type TripUpdateResponse = {
+  __typename?: "TripUpdateResponse"
+  success: Scalars["Boolean"]
+  message?: Maybe<Scalars["String"]>
+  launches?: Maybe<Array<Maybe<Launch>>>
+}
+
+export type User = {
+  __typename?: "User"
+  id: Scalars["ID"]
+  email: Scalars["String"]
+  profileImage?: Maybe<Scalars["String"]>
+  trips: Array<Maybe<Launch>>
+}
 
 export type WithIndex<TObject> = TObject & Record<string, any>
 export type ResolversObject<TObject> = WithIndex<TObject>
@@ -204,64 +190,46 @@ export type DirectiveResolverFn<TResult = Record<string, unknown>, TParent = Rec
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<Record<string, unknown>>
+  ID: ResolverTypeWrapper<Scalars["ID"]>
   Int: ResolverTypeWrapper<Scalars["Int"]>
   String: ResolverTypeWrapper<Scalars["String"]>
-  ID: ResolverTypeWrapper<Scalars["ID"]>
   Mutation: ResolverTypeWrapper<Record<string, unknown>>
-  TripUpdateResponse: ResolverTypeWrapper<TripUpdateResponse>
+  Launch: ResolverTypeWrapper<Launch>
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>
   LaunchConnection: ResolverTypeWrapper<LaunchConnection>
-  Launch: ResolverTypeWrapper<Launch>
-  Rocket: ResolverTypeWrapper<Rocket>
-  User: ResolverTypeWrapper<User>
   Mission: ResolverTypeWrapper<Mission>
   PatchSize: PatchSize
-  CacheControlScope: CacheControlScope
-  Upload: ResolverTypeWrapper<Scalars["Upload"]>
+  Rocket: ResolverTypeWrapper<Rocket>
+  TripUpdateResponse: ResolverTypeWrapper<TripUpdateResponse>
+  User: ResolverTypeWrapper<User>
 }>
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Query: Record<string, unknown>
+  ID: Scalars["ID"]
   Int: Scalars["Int"]
   String: Scalars["String"]
-  ID: Scalars["ID"]
   Mutation: Record<string, unknown>
-  TripUpdateResponse: TripUpdateResponse
+  Launch: Launch
   Boolean: Scalars["Boolean"]
   LaunchConnection: LaunchConnection
-  Launch: Launch
-  Rocket: Rocket
-  User: User
   Mission: Mission
-  Upload: Scalars["Upload"]
+  Rocket: Rocket
+  TripUpdateResponse: TripUpdateResponse
+  User: User
 }>
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]> = ResolversObject<{
-  launches?: Resolver<ResolversTypes["LaunchConnection"], ParentType, ContextType, RequireFields<QueryLaunchesArgs, never>>
   launch?: Resolver<Maybe<ResolversTypes["Launch"]>, ParentType, ContextType, RequireFields<QueryLaunchArgs, "id">>
+  launches?: Resolver<ResolversTypes["LaunchConnection"], ParentType, ContextType, RequireFields<QueryLaunchesArgs, never>>
   me?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>
 }>
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]> = ResolversObject<{
+  login?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType, RequireFields<MutationLoginArgs, never>>
   bookTrips?: Resolver<ResolversTypes["TripUpdateResponse"], ParentType, ContextType, RequireFields<MutationBookTripsArgs, "launchIds">>
   cancelTrip?: Resolver<ResolversTypes["TripUpdateResponse"], ParentType, ContextType, RequireFields<MutationCancelTripArgs, "launchId">>
-  login?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType, RequireFields<MutationLoginArgs, never>>
-  uploadProfileImage?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType, RequireFields<MutationUploadProfileImageArgs, "file">>
-}>
-
-export type TripUpdateResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes["TripUpdateResponse"] = ResolversParentTypes["TripUpdateResponse"]> = ResolversObject<{
-  success?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>
-  message?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>
-  launches?: Resolver<Maybe<Array<Maybe<ResolversTypes["Launch"]>>>, ParentType, ContextType>
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>
-}>
-
-export type LaunchConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes["LaunchConnection"] = ResolversParentTypes["LaunchConnection"]> = ResolversObject<{
-  cursor?: Resolver<ResolversTypes["String"], ParentType, ContextType>
-  hasMore?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>
-  launches?: Resolver<Array<Maybe<ResolversTypes["Launch"]>>, ParentType, ContextType>
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }>
 
 export type LaunchResolvers<ContextType = any, ParentType extends ResolversParentTypes["Launch"] = ResolversParentTypes["Launch"]> = ResolversObject<{
@@ -273,10 +241,30 @@ export type LaunchResolvers<ContextType = any, ParentType extends ResolversParen
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }>
 
+export type LaunchConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes["LaunchConnection"] = ResolversParentTypes["LaunchConnection"]> = ResolversObject<{
+  cursor?: Resolver<ResolversTypes["String"], ParentType, ContextType>
+  hasMore?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>
+  launches?: Resolver<Array<Maybe<ResolversTypes["Launch"]>>, ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}>
+
+export type MissionResolvers<ContextType = any, ParentType extends ResolversParentTypes["Mission"] = ResolversParentTypes["Mission"]> = ResolversObject<{
+  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>
+  missionPatch?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType, RequireFields<MissionMissionPatchArgs, never>>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}>
+
 export type RocketResolvers<ContextType = any, ParentType extends ResolversParentTypes["Rocket"] = ResolversParentTypes["Rocket"]> = ResolversObject<{
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>
   name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>
   type?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}>
+
+export type TripUpdateResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes["TripUpdateResponse"] = ResolversParentTypes["TripUpdateResponse"]> = ResolversObject<{
+  success?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>
+  message?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>
+  launches?: Resolver<Maybe<Array<Maybe<ResolversTypes["Launch"]>>>, ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }>
 
@@ -288,26 +276,15 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }>
 
-export type MissionResolvers<ContextType = any, ParentType extends ResolversParentTypes["Mission"] = ResolversParentTypes["Mission"]> = ResolversObject<{
-  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>
-  missionPatch?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType, RequireFields<MissionMissionPatchArgs, never>>
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>
-}>
-
-export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes["Upload"], any> {
-  name: "Upload"
-}
-
 export type Resolvers<ContextType = any> = ResolversObject<{
   Query?: QueryResolvers<ContextType>
   Mutation?: MutationResolvers<ContextType>
-  TripUpdateResponse?: TripUpdateResponseResolvers<ContextType>
-  LaunchConnection?: LaunchConnectionResolvers<ContextType>
   Launch?: LaunchResolvers<ContextType>
-  Rocket?: RocketResolvers<ContextType>
-  User?: UserResolvers<ContextType>
+  LaunchConnection?: LaunchConnectionResolvers<ContextType>
   Mission?: MissionResolvers<ContextType>
-  Upload?: GraphQLScalarType
+  Rocket?: RocketResolvers<ContextType>
+  TripUpdateResponse?: TripUpdateResponseResolvers<ContextType>
+  User?: UserResolvers<ContextType>
 }>
 
 

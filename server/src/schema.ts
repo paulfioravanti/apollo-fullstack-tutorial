@@ -5,7 +5,7 @@ import { LaunchConnection } from "./schema/launchConnection"
 import { Mission } from "./schema/mission"
 import { Rocket } from "./schema/rocket"
 import { TripUpdateResponse } from "./schema/tripUpdateResponse"
-import { typeDefs as User } from "./schema/user"
+import { User } from "./schema/user"
 import { resolvers } from "./resolvers"
 
 const BaseTypeDef = gql`
@@ -25,7 +25,7 @@ export const schema =
       Mission.typeDefs,
       Rocket.typeDefs,
       TripUpdateResponse.typeDefs,
-      User
+      User.typeDefs
     ],
     resolvers: merge(
       resolvers,

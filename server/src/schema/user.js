@@ -1,14 +1,7 @@
-import { gql } from "apollo-server"
+import { typeDefs } from "./user/typedefs"
+import { resolvers } from "./user/resolvers"
 
-export const typeDefs = gql`
-  extend type Query {
-    me: User
-  }
-
-  type User {
-    id: ID!
-    email: String!
-    profileImage: String
-    trips: [Launch]!
-  }
-`
+export const User = {
+  typeDefs,
+  resolvers
+}

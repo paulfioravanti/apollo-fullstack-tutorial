@@ -1,18 +1,18 @@
 import merge from "lodash.merge"
-import { makeExecutableSchema } from "apollo-server"
+import { gql, makeExecutableSchema } from "apollo-server"
+import { Auth } from "./schema/auth"
 import { Launch } from "./schema/launch"
 import { LaunchConnection } from "./schema/launchConnection"
 import { Mission } from "./schema/mission"
 import { TripUpdateResponse } from "./schema/tripUpdateResponse"
-import { typeDefs } from "./schema/typedefs"
 import { User } from "./schema/user"
-import { resolvers } from "./resolvers"
+import { typeDefs } from "./schema/typedefs"
 
 export const schema =
   makeExecutableSchema({
-    typeDefs,
+    typeDefs: typeDefs,
     resolvers: merge(
-      resolvers,
+      Auth.resolvers,
       Launch.resolvers,
       LaunchConnection.resolvers,
       Mission.resolvers,

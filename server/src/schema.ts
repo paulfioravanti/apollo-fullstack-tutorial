@@ -1,10 +1,11 @@
+import merge from "lodash.merge"
 import { gql, makeExecutableSchema } from "apollo-server"
-import { typeDefs as Launch } from "./gql/launch"
-import { typeDefs as LaunchConnection } from "./gql/launchConnection"
-import { typeDefs as Mission } from "./gql/mission"
-import { typeDefs as Rocket } from "./gql/rocket"
-import { typeDefs as TripUpdateResponse } from "./gql/tripUpdateResponse"
-import { typeDefs as User } from "./gql/user"
+import { Launch } from "./schema/launch"
+import { LaunchConnection } from "./schema/launchConnection"
+import { typeDefs as Mission } from "./schema/mission"
+import { typeDefs as Rocket } from "./schema/rocket"
+import { typeDefs as TripUpdateResponse } from "./schema/tripUpdateResponse"
+import { typeDefs as User } from "./schema/user"
 import { resolvers } from "./resolvers"
 
 const BaseTypeDef = gql`
@@ -19,12 +20,16 @@ export const schema =
   makeExecutableSchema({
     typeDefs: [
       BaseTypeDef,
-      Launch,
-      LaunchConnection,
+      Launch.typeDefs,
+      LaunchConnection.typeDefs,
       Mission,
       Rocket,
       TripUpdateResponse,
       User
     ],
-    resolvers: resolvers
+    resolvers: merge(
+      resolvers,
+      Launch.resolvers,
+      LaunchConnection.resolvers
+    )
   })

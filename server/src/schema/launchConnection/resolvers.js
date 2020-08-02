@@ -1,5 +1,11 @@
 import { paginateResults } from "../../utils"
 
+export const resolvers = {
+  Query: {
+    launches
+  }
+}
+
 export async function launches(
   _parent,
   { pageSize = 20, after },

@@ -1,4 +1,4 @@
-import { MutationResolvers } from "../../generated/graphql"
+import { MutationResolvers, ResolversParentTypes } from "../../generated/graphql"
 import { Maybe } from "../../utils"
 import { UserAPI } from "../../datasources/user"
 import { UserModel } from "../../store/user"
@@ -10,7 +10,7 @@ export const resolvers: MutationResolvers = {
 }
 
 export async function login(
-  _parent: string,
+  _parent: ResolversParentTypes["User"],
   { email }: { email: string },
   { dataSources: { userAPI } }: { dataSources: { userAPI: UserAPI } }
 ): Promise<Maybe<string>> {

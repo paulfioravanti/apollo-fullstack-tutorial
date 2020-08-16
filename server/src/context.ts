@@ -1,16 +1,14 @@
 import isEmail from "isemail"
 import { Request } from "express"
 import { ContextFunction } from "apollo-server-core"
-import { Store, UserModel } from "./store"
+import { Store, UserAttributes, UserModel } from "./store"
 import { MaybeNull } from "./utils"
 
-type Context = {
-  user: MaybeNull<UserModel>
+export type Context = {
+  user: MaybeNull<UserAttributes>
 }
-type Result = [
-  UserModel,
-  boolean
-]
+
+type Result = [UserModel, boolean]
 
 // the function that sets up the global context for each resolver, using the req
 export function initContext({ users }: Store): ContextFunction {
@@ -23,8 +21,8 @@ export function initContext({ users }: Store): ContextFunction {
     if (!isEmail.validate(email)) return { user: null }
 
     // find a user by their email
-    const result: Result = await users.findOrCreate({ where: { email } })
-    const user: MaybeNull<UserModel> = result?.[0] || null
+    const [result]: Result = await users.findOrCreate({ where: { email } })
+    const user: MaybeNull<UserAttributes> = result ? result.get() : null
 
     return { user }
   }

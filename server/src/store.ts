@@ -1,9 +1,19 @@
 import { Options, Sequelize } from "sequelize"
-import { UserDefinition, UserModel, defineUser } from "./store/user"
-import { TripDefinition, defineTrip } from "./store/trip"
+import {
+  UserAttributes,
+  UserDefinition,
+  UserModel,
+  defineUser
+} from "./store/user"
+import {
+  TripAttributes,
+  TripDefinition,
+  TripModel,
+  defineTrip
+} from "./store/trip"
 import config from "./store/config.json"
 
-export { UserModel }
+export { UserAttributes, UserModel, TripAttributes, TripModel }
 
 export type Store = {
   db: Sequelize

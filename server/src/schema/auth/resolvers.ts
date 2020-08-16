@@ -1,7 +1,7 @@
 import { MutationResolvers, ResolversParentTypes } from "../../generated/graphql"
-import { Maybe } from "../../utils"
+import { Maybe, MaybeNull } from "../../utils"
 import { UserAPI } from "../../datasources/user"
-import { UserModel } from "../../store/user"
+import { UserAttributes } from "../../store/user"
 
 export const resolvers: MutationResolvers = {
   Mutation: {
@@ -14,7 +14,8 @@ export async function login(
   { email }: { email: string },
   { dataSources: { userAPI } }: { dataSources: { userAPI: UserAPI } }
 ): Promise<Maybe<string>> {
-  const user: UserModel = await userAPI.findOrCreateUser({ email })
+  const user: MaybeNull<UserAttributes> =
+    await userAPI.findOrCreateUser({ email })
 
   if (user) {
     return Buffer.from(email).toString("base64")

@@ -1,4 +1,4 @@
-export const resolvers = {
+export const TripUpdateResponseResolvers = {
   Mutation: {
     bookTrips,
     cancelTrip

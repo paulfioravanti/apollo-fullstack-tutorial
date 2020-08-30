@@ -1,7 +1,7 @@
 import { DocumentNode } from "graphql"
 import { gql } from "apollo-server"
 
-export const typeDefs: DocumentNode = gql`
+export const LaunchConnectionTypeDef: DocumentNode = gql`
   extend type Query {
     launches(
       """

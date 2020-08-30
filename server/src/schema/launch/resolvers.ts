@@ -1,13 +1,13 @@
 import { ArgumentNode } from "graphql"
 import {
-  LaunchResolvers,
+  LaunchResolvers as GeneratedLaunchResolvers,
   Launch,
   ResolversParentTypes
 } from "../../generated/graphql"
 import { LaunchAPI } from "../../datasources/launch"
 import { UserAPI } from "../../datasources/user"
 
-export const resolvers: LaunchResolvers = {
+export const LaunchResolvers: GeneratedLaunchResolvers = {
   Query: {
     launch
   },

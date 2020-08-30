@@ -1,6 +1,6 @@
 import { paginateResults } from "../../utils"
 
-export const resolvers = {
+export const LaunchConnectionResolvers = {
   Query: {
     launches
   }

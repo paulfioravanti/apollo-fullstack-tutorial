@@ -1,7 +1,7 @@
 import { DocumentNode } from "graphql"
 import { gql } from "apollo-server"
 
-export const typeDefs: DocumentNode = gql`
+export const TripUpdateResponseTypeDef: DocumentNode = gql`
   extend type Mutation {
     # if false, signup failed -- check errors
     bookTrips(launchIds: [ID]!): TripUpdateResponse!

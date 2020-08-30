@@ -3,7 +3,7 @@ import { Maybe, MaybeNull } from "../../utils"
 import { UserAPI } from "../../datasources/user"
 import { UserAttributes } from "../../store/user"
 
-export const resolvers: MutationResolvers = {
+export const AuthResolvers: MutationResolvers = {
   Mutation: {
     login
   }

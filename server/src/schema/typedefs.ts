@@ -1,12 +1,12 @@
 import { DocumentNode } from "graphql"
 import { gql } from "apollo-server"
-import { typeDefs as Auth } from "./auth/typedefs"
-import { typeDefs as Launch } from "./launch/typedefs"
-import { typeDefs as LaunchConnection } from "./launchConnection/typedefs"
-import { typeDefs as Mission } from "./mission/typedefs"
-import { typeDefs as Rocket } from "./rocket/typedefs"
-import { typeDefs as TripUpdateResponse } from "./tripUpdateResponse/typedefs"
-import { typeDefs as User } from "./user/typedefs"
+import { AuthTypeDef } from "./auth/typedefs"
+import { LaunchTypeDef } from "./launch/typedefs"
+import { LaunchConnectionTypeDef } from "./launchConnection/typedefs"
+import { MissionTypeDef } from "./mission/typedefs"
+import { RocketTypeDef } from "./rocket/typedefs"
+import { TripUpdateResponseTypeDef } from "./tripUpdateResponse/typedefs"
+import { UserTypeDef } from "./user/typedefs"
 
 const BaseTypeDef: DocumentNode = gql`
   type Query
@@ -15,11 +15,11 @@ const BaseTypeDef: DocumentNode = gql`
 
 export const typeDefs: DocumentNode[] = [
   BaseTypeDef,
-  Auth,
-  Launch,
-  LaunchConnection,
-  Mission,
-  Rocket,
-  TripUpdateResponse,
-  User
+  AuthTypeDef,
+  LaunchTypeDef,
+  LaunchConnectionTypeDef,
+  MissionTypeDef,
+  RocketTypeDef,
+  TripUpdateResponseTypeDef,
+  UserTypeDef
 ]

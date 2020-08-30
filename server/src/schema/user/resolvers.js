@@ -1,4 +1,4 @@
-export const resolvers = {
+export const UserResolvers = {
   Query: {
     me
   },

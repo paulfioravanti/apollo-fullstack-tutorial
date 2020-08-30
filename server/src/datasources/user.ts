@@ -78,7 +78,7 @@ export class UserAPI extends DataSource {
     return !!this.store.trips.destroy({ where: { userId, launchId } })
   }
 
-  async getLaunchIdsByUser(): Promise<number[]> {
+  async getLaunchIdsByUser(): Promise<string[]> {
     const userId: Maybe<number> = this.context.user?.id
     const trips: TripModel[] = await this.store.trips.findAll({
       where: { userId }

@@ -1,10 +1,10 @@
 import { DataSource } from "apollo-datasource"
 import { RESTDataSource } from "apollo-datasource-rest"
 import { Store } from "./store"
-import { LaunchAPI } from "./datasources/launch"
+import { Launch, LaunchAPI } from "./datasources/launch"
 import { UserAPI } from "./datasources/user"
 
-export { LaunchAPI, UserAPI }
+export { Launch, LaunchAPI, UserAPI }
 export type DataSourcesFunction = () => DataSources
 
 type DataSources = {

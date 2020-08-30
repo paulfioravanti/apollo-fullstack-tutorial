@@ -2,14 +2,16 @@ import { config } from "dotenv"
 
 config()
 
-import { DataSource } from "apollo-datasource"
-import { RESTDataSource } from "apollo-datasource-rest"
 import { ApolloServer } from "apollo-server"
 import { ContextFunction } from "apollo-server-core"
 import { schema } from "./schema"
-import { initStore, Store } from "./store"
-import { LaunchAPI } from "./datasources/launch"
-import { UserAPI } from "./datasources/user"
+import { Store, initStore } from "./store"
+import {
+  DataSourcesFunction,
+  initDataSources,
+  LaunchAPI,
+  UserAPI
+} from "./datasources"
 import { internalEngineDemo } from "./engine-demo"
 import { initContext } from "./context"
 
@@ -17,18 +19,8 @@ export { schema, ApolloServer, LaunchAPI, UserAPI }
 
 // creates a sequelize connection once. NOT for every request
 export const store: Store = initStore()
+export const dataSources: DataSourcesFunction = initDataSources(store)
 export const context: ContextFunction = initContext(store)
-
-type DataSources = {
-  launchAPI: RESTDataSource
-  userAPI: DataSource
-}
-
-// set up any dataSources our resolvers need
-export const dataSources = (): DataSources => ({
-  launchAPI: new LaunchAPI(),
-  userAPI: new UserAPI({ store })
-})
 
 // Set up Apollo Server
 export const server: ApolloServer = new ApolloServer({

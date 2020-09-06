@@ -6,16 +6,9 @@ import { ApolloServer } from "apollo-server"
 import { ContextFunction } from "apollo-server-core"
 import { schema } from "./schema"
 import { Store, initStore } from "./store"
-import {
-  DataSourcesFunction,
-  initDataSources,
-  LaunchAPI,
-  UserAPI
-} from "./datasources"
+import { DataSourcesFunction, initDataSources } from "./datasources"
 import { internalEngineDemo } from "./engine-demo"
 import { initContext } from "./context"
-
-export { schema, ApolloServer, LaunchAPI, UserAPI }
 
 // creates a sequelize connection once. NOT for every request
 export const store: Store = initStore()

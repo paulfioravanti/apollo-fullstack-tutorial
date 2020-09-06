@@ -1,4 +1,7 @@
-import { MutationResolvers, ResolversParentTypes } from "../../generated/graphql"
+import {
+  MutationResolvers,
+  ResolversParentTypes
+} from "../../generated/graphql"
 import { Maybe, MaybeNull } from "../../utils"
 import { UserAPI } from "../../datasources/user"
 import { UserAttributes } from "../../store/user"

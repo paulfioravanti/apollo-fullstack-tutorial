@@ -1,25 +1,38 @@
-# Apollo tutorial
+# Apollo Tutorial
 
-This is the fullstack app for the [Apollo tutorial](http://apollographql.com/docs/tutorial/introduction.html). 🚀
+This is my sandbox for the fullstack app for the [Apollo tutorial][].
 
-## File structure
-
-The app is split out into two folders:
-- `start`: Starting point for the tutorial
-- `final`: Final version
-
-From within the `start` and `final` directories, there are two folders (one for `server` and one for `client`).
+Currently, I haven't done anything special with the front end, but I have
+attempted to refactor and introduce [Typescript][] to the back end application.
 
 ## Installation
 
-To run the app, run these commands in two separate terminal windows from the root:
-
-```bash
-cd final/server && npm i && npm start
+```sh
+git clone git@github.com:paulfioravanti/apollo-fullstack-tutorial.git
+cd apollo-fullstack-tutorial
 ```
 
-and
+Run each application in a separate terminal window:
 
-```bash
-cd final/client && npm i && npm start
+## Back End
+
+```sh
+cd server
+npm install
+npm start
 ```
+
+Open <http://localhost:4000> to get a GraphQL Playground interface.
+
+## Front End
+
+```sh
+cd client
+npm install
+npm start
+```
+
+Open <http://localhost:3000> to open the application.
+
+[Apollo tutorial]: http://apollographql.com/docs/tutorial/introduction.html
+[Typescript]: https://www.typescriptlang.org/
